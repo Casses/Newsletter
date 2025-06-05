@@ -1,0 +1,16 @@
+D:\Dev\Newsletter\src\Newsletter.Interface\bin\Debug\net9.0\Newsletter.Interface.deps.json
+D:\Dev\Newsletter\src\Newsletter.Interface\bin\Debug\net9.0\Newsletter.Interface.dll
+D:\Dev\Newsletter\src\Newsletter.Interface\bin\Debug\net9.0\Newsletter.Interface.pdb
+D:\Dev\Newsletter\src\Newsletter.Interface\bin\Debug\net9.0\Newsletter.Data.Entities.dll
+D:\Dev\Newsletter\src\Newsletter.Interface\bin\Debug\net9.0\Newsletter.Data.Entities.pdb
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\Newsletter.Interface.csproj.AssemblyReference.cache
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\Newsletter.Interface.GeneratedMSBuildEditorConfig.editorconfig
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\Newsletter.Interface.AssemblyInfoInputs.cache
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\Newsletter.Interface.AssemblyInfo.cs
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\Newsletter.Interface.csproj.CoreCompileInputs.cache
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\Newsletter.Interface.sourcelink.json
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\Newslett.7870CA22.Up2Date
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\Newsletter.Interface.dll
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\refint\Newsletter.Interface.dll
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\Newsletter.Interface.pdb
+D:\Dev\Newsletter\src\Newsletter.Interface\obj\Debug\net9.0\ref\Newsletter.Interface.dll

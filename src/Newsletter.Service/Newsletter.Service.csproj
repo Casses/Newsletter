@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Newsletter.Data\Newsletter.Data.csproj" />
+    <ProjectReference Include="..\Newsletter.Data.Entities\Newsletter.Data.Entities.csproj" />
+    <ProjectReference Include="..\Newsletter.Interface\Newsletter.Interface.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

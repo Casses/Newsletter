@@ -1,0 +1,12 @@
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\bin\Debug\net9.0\Newsletter.Data.Entities.deps.json
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\bin\Debug\net9.0\Newsletter.Data.Entities.dll
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\bin\Debug\net9.0\Newsletter.Data.Entities.pdb
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\obj\Debug\net9.0\Newsletter.Data.Entities.GeneratedMSBuildEditorConfig.editorconfig
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\obj\Debug\net9.0\Newsletter.Data.Entities.AssemblyInfoInputs.cache
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\obj\Debug\net9.0\Newsletter.Data.Entities.AssemblyInfo.cs
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\obj\Debug\net9.0\Newsletter.Data.Entities.csproj.CoreCompileInputs.cache
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\obj\Debug\net9.0\Newsletter.Data.Entities.sourcelink.json
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\obj\Debug\net9.0\Newsletter.Data.Entities.dll
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\obj\Debug\net9.0\refint\Newsletter.Data.Entities.dll
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\obj\Debug\net9.0\Newsletter.Data.Entities.pdb
+D:\Dev\Newsletter\src\Newsletter.Data.Entities\obj\Debug\net9.0\ref\Newsletter.Data.Entities.dll

@@ -37,4 +37,7 @@ packages/
 
 # Others
 *.swp
-*.tmp 
+*.tmp
+
+# Output directory
+output/ 

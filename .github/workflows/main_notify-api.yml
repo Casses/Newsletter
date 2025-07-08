@@ -11,7 +11,7 @@ on:
 
 env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '.' # set this to the path to your web app project, defaults to the repository root
-  DOTNET_VERSION: '9.0.x' # set this to the dotnet version to use
+  DOTNET_VERSION: '8.0.x' # set this to the dotnet version to use
 
 jobs:
   build-and-deploy:
@@ -34,6 +34,10 @@ jobs:
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
+          # Copy .azurefunctions folder to output directory for deployment
+          cp -r .azurefunctions ./output/
+          # Update scriptFile paths in function.json files
+          sed -i 's|src/Newsletter.Functions/bin/Newsletter.Functions.dll|bin/Newsletter.Functions.dll|g' ./output/.azurefunctions/*/function.json
           popd
       
       - name: Login to Azure

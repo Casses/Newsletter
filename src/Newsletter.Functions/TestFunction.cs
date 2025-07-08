@@ -1,8 +1,8 @@
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace Newsletter.Functions;
 
@@ -15,11 +15,19 @@ public class TestFunction
         _logger = logger;
     }
 
-    [FunctionName("TestFunction")]
-    public IActionResult Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
+    [Function("TestFunction")]
+    public async Task<HttpResponseData> Run(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
     {
         _logger.LogInformation("Test function processed a request.");
-        return new OkObjectResult(new { message = "Test function is working!" });
+        
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+        
+        var result = new { message = "Test function is working!" };
+        var jsonResponse = JsonSerializer.Serialize(result);
+        await response.WriteStringAsync(jsonResponse);
+        
+        return response;
     }
 } 

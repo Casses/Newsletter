@@ -46,9 +46,6 @@ jobs:
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/src/Newsletter.Data'
           # Install EF Core tools
           dotnet tool install --global dotnet-ef
-          # Verify database connection
-          echo "Verifying database connection..."
-          dotnet ef database update --connection "${{ secrets.AZURE_SQL_CONNECTION_STRING }}" --dry-run
           # List available migrations
           echo "Available migrations:"
           dotnet ef migrations list

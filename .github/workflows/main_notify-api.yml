@@ -42,28 +42,14 @@ jobs:
       
       - name: 'Deploy Database Migrations'
         shell: bash
+        env:
+          AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/src/Newsletter.Data'
           # Install EF Core tools
           dotnet tool install --global dotnet-ef
-          # Create appsettings.json with the actual connection string
-          cat > appsettings.json << EOF
-          {
-            "ConnectionStrings": {
-              "DefaultConnection": "${{ secrets.AZURE_SQL_CONNECTION_STRING }}"
-            },
-            "Logging": {
-              "LogLevel": {
-                "Default": "Information",
-                "Microsoft.AspNetCore": "Warning"
-              }
-            },
-            "AllowedHosts": "*"
-          }
-          EOF
-          # Debug: Show the created appsettings.json (without sensitive data)
-          echo "Created appsettings.json:"
-          cat appsettings.json | sed 's/Password=[^;]*/Password=***/g'
+          # Debug: Show connection string (without sensitive data)
+          echo "Connection string available: $([ ! -z "$AZURE_SQL_CONNECTION_STRING" ] && echo "YES" || echo "NO")"
           # List available migrations
           echo "Available migrations:"
           dotnet ef migrations list

@@ -24,7 +24,7 @@ public class TestFunction
         var response = req.CreateResponse(HttpStatusCode.OK);
         response.Headers.Add("Content-Type", "application/json; charset=utf-8");
         
-        var result = new { message = "Test function is working!" };
+        var result = new { message = "Test function is working!  And so is CI/CD!!" };
         var jsonResponse = JsonSerializer.Serialize(result);
         await response.WriteStringAsync(jsonResponse);
         

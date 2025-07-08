@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Newsletter.Handler")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+386590eae28f3b67c3fe9f013b870594b475beae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+877210db0b095693d037f13ae548515bd5ac5995")]
 [assembly: System.Reflection.AssemblyProductAttribute("Newsletter.Handler")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Newsletter.Handler")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

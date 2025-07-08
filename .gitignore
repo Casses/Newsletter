@@ -1,0 +1,41 @@
+# Ignore build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Visual Studio Code
+.vscode/
+
+# Azure Functions local settings
+local.settings.json
+
+# Publish output
+publish/
+
+# Rider project files
+.idea/
+
+# Logs
+*.log
+
+# Test results
+TestResults/
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+
+# Others
+*.swp
+*.tmp 
+

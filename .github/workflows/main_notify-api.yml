@@ -40,6 +40,24 @@ jobs:
           sed -i 's|src/Newsletter.Functions/bin/Newsletter.Functions.dll|bin/Newsletter.Functions.dll|g' ./output/.azurefunctions/*/function.json
           popd
       
+      - name: 'Deploy Database Migrations'
+        shell: bash
+        run: |
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/src/Newsletter.Data'
+          # Install EF Core tools
+          dotnet tool install --global dotnet-ef
+          # Verify database connection
+          echo "Verifying database connection..."
+          dotnet ef database update --connection "${{ secrets.AZURE_SQL_CONNECTION_STRING }}" --dry-run
+          # List available migrations
+          echo "Available migrations:"
+          dotnet ef migrations list
+          # Run migrations against Azure SQL Database
+          echo "Applying database migrations..."
+          dotnet ef database update --connection "${{ secrets.AZURE_SQL_CONNECTION_STRING }}"
+          echo "Database migrations completed successfully!"
+          popd
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:

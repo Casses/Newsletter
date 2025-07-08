@@ -46,8 +46,24 @@ jobs:
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/src/Newsletter.Data'
           # Install EF Core tools
           dotnet tool install --global dotnet-ef
-          # Update appsettings.json with the actual connection string
-          sed -i "s|Server=tcp:localhost,1433;Initial Catalog=NewsletterDb;Persist Security Info=False;User ID=sa;Password=YourPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;|${{ secrets.AZURE_SQL_CONNECTION_STRING }}|g" appsettings.json
+          # Create appsettings.json with the actual connection string
+          cat > appsettings.json << EOF
+          {
+            "ConnectionStrings": {
+              "DefaultConnection": "${{ secrets.AZURE_SQL_CONNECTION_STRING }}"
+            },
+            "Logging": {
+              "LogLevel": {
+                "Default": "Information",
+                "Microsoft.AspNetCore": "Warning"
+              }
+            },
+            "AllowedHosts": "*"
+          }
+          EOF
+          # Debug: Show the created appsettings.json (without sensitive data)
+          echo "Created appsettings.json:"
+          cat appsettings.json | sed 's/Password=[^;]*/Password=***/g'
           # List available migrations
           echo "Available migrations:"
           dotnet ef migrations list

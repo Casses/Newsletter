@@ -16,6 +16,11 @@ public class NewsletterContextFactory : IDesignTimeDbContextFactory<NewsletterCo
         var optionsBuilder = new DbContextOptionsBuilder<NewsletterContext>();
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            throw new InvalidOperationException("Connection string 'DefaultConnection' not found in configuration.");
+        }
+        
         optionsBuilder.UseSqlServer(connectionString);
 
         return new NewsletterContext(optionsBuilder.Options);

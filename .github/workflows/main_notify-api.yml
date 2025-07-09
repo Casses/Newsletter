@@ -20,6 +20,7 @@ env:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: Azure
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
@@ -47,9 +48,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_079C709E54E7489BA1E48452309AD523 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_74003D729F69422D9F9ABE685CDAE9D6 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9266EF4BD71443FFACDF02F96D6C6ACB }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
 
       - name: Get runner IP address
         id: get-runner-ip
@@ -70,7 +71,6 @@ jobs:
       
       - name: 'Deploy Database Migrations'
         shell: bash
-        environment: Azure
         env:
           AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
         run: |

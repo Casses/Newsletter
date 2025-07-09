@@ -41,6 +41,33 @@ jobs:
           sed -i 's|src/Newsletter.Functions/bin/Newsletter.Functions.dll|bin/Newsletter.Functions.dll|g' ./output/.azurefunctions/*/function.json
           popd
       
+      
+      
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_079C709E54E7489BA1E48452309AD523 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_74003D729F69422D9F9ABE685CDAE9D6 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9266EF4BD71443FFACDF02F96D6C6ACB }}
+
+      # Get runner IP address
+      - name: Get runner IP address
+        id: get-runner-ip
+        run: |
+          RUNNER_IP="$(curl --silent https://api.ipify.org)"
+          echo "Runner IPv4 address: $RUNNER_IP"
+          echo "ip=$RUNNER_IP" >> $GITHUB_OUTPUT
+
+      # Add runner firewall rule
+      - name: Add runner firewall rule
+        run: >-
+          az sql server firewall-rule create
+          --name ${{ env.FIREWALL_RULE_NAME }}
+          --server ${{ env.SQL_SERVER_NAME }}
+          --resource-group ${{ env.RESOURCE_GROUP }}
+          --start-ip-address ${{ steps.get-runner-ip.outputs.ip }}
+          --end-ip-address ${{ steps.get-runner-ip.outputs.ip }}
+
       - name: 'Deploy Database Migrations'
         shell: bash
         env:
@@ -51,21 +78,26 @@ jobs:
           dotnet tool install --global dotnet-ef
           # Debug: Show connection string (without sensitive data)
           echo "Connection string available: $([ ! -z "$AZURE_SQL_CONNECTION_STRING" ] && echo "YES" || echo "NO")"
+          # Extract server name for debugging
+          SERVER_NAME=$(echo "$AZURE_SQL_CONNECTION_STRING" | grep -o 'Server=tcp:[^,]*' | cut -d'=' -f3 | cut -d'/' -f3)
+          echo "Attempting to connect to server: $SERVER_NAME"
           # List available migrations
           echo "Available migrations:"
-          dotnet ef migrations list
+          dotnet ef migrations list --verbose
           # Run migrations against Azure SQL Database
           echo "Applying database migrations..."
-          dotnet ef database update
+          dotnet ef database update --verbose
           echo "Database migrations completed successfully!"
           popd
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_079C709E54E7489BA1E48452309AD523 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_74003D729F69422D9F9ABE685CDAE9D6 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9266EF4BD71443FFACDF02F96D6C6ACB }}
+      # Remove runner firewall rule
+      - name: Remove runner firewall rules
+        if: always()
+        run: >-
+          az sql server firewall-rule delete
+          --name ${{ env.FIREWALL_RULE_NAME }}
+          --server ${{ env.SQL_SERVER_NAME }}
+          --resource-group ${{ env.RESOURCE_GROUP }}
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1

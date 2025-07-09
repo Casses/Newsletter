@@ -67,8 +67,30 @@ jobs:
           --resource-group ${{ env.RESOURCE_GROUP }}
           --start-ip-address ${{ steps.get-runner-ip.outputs.ip }}
           --end-ip-address ${{ steps.get-runner-ip.outputs.ip }}
+      
+      - name: 'Deploy Database Migrations'
+        shell: bash
+        env:
+          AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        run: |
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/src/Newsletter.Data'
+          # Install EF Core tools
+          dotnet tool install --global dotnet-ef
+          # Debug: Show connection string (without sensitive data)
+          echo "Connection string available: $([ ! -z "$AZURE_SQL_CONNECTION_STRING" ] && echo "YES" || echo "NO")"
+          # Extract server name for debugging
+          SERVER_NAME=$(echo "$AZURE_SQL_CONNECTION_STRING" | grep -o 'Server=tcp:[^,]*' | cut -d'=' -f3 | cut -d'/' -f3)
+          echo "Attempting to connect to server: $SERVER_NAME"
+          # List available migrations
+          echo "Available migrations:"
+          dotnet ef migrations list --verbose
+          # Run migrations against Azure SQL Database
+          echo "Applying database migrations..."
+          dotnet ef database update --verbose
+          echo "Database migrations completed successfully!"
+          popd
 
-# Remove runner firewall rule
+      # Remove runner firewall rule
       - name: Remove runner firewall rules
         if: always()
         run: >-

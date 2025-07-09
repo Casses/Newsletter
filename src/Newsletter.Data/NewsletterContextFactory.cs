@@ -14,12 +14,14 @@ public class NewsletterContextFactory : IDesignTimeDbContextFactory<NewsletterCo
             .Build();
 
         var optionsBuilder = new DbContextOptionsBuilder<NewsletterContext>();
-        var connectionString = configuration.GetConnectionString("DefaultConnection") ?? 
-                              Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTION_STRING");
+        
+        // Prioritize environment variable over appsettings.json
+        var connectionString = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTION_STRING") ?? 
+                              configuration.GetConnectionString("DefaultConnection");
         
         if (string.IsNullOrEmpty(connectionString))
         {
-            throw new InvalidOperationException("Connection string 'DefaultConnection' not found in configuration or environment variables.");
+            throw new InvalidOperationException("Connection string 'AZURE_SQL_CONNECTION_STRING' not found in environment variables or 'DefaultConnection' not found in configuration.");
         }
         
         optionsBuilder.UseSqlServer(connectionString);

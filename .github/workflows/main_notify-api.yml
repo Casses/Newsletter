@@ -48,6 +48,33 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_74003D729F69422D9F9ABE685CDAE9D6 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9266EF4BD71443FFACDF02F96D6C6ACB }}
 
+      - name: Get runner IP address
+        id: get-runner-ip
+        run: |
+          RUNNER_IP="$(curl --silent https://api.ipify.org)"
+          echo "Runner IPv4 address: $RUNNER_IP"
+          echo "ip=$RUNNER_IP" >> $GITHUB_OUTPUT
+
+      # Add runner firewall rule
+      - name: Add runner firewall rule
+        run: >-
+          az sql server firewall-rule create
+          --name ${{ env.FIREWALL_RULE_NAME }}
+          --server ${{ env.SQL_SERVER_NAME }}
+          --resource-group ${{ env.RESOURCE_GROUP }}
+          --start-ip-address ${{ steps.get-runner-ip.outputs.ip }}
+          --end-ip-address ${{ steps.get-runner-ip.outputs.ip }}
+
+# Remove runner firewall rule
+      - name: Remove runner firewall rules
+        if: always()
+        run: >-
+          az sql server firewall-rule delete
+          --name ${{ env.FIREWALL_RULE_NAME }}
+          --server ${{ env.SQL_SERVER_NAME }}
+          --resource-group ${{ env.RESOURCE_GROUP }}
+          --yes || echo "Firewall rule removal failed or rule doesn't exist"
+
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa

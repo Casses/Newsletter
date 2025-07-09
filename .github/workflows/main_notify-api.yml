@@ -99,7 +99,6 @@ jobs:
           --name ${{ env.FIREWALL_RULE_NAME }}
           --server ${{ env.SQL_SERVER_NAME }}
           --resource-group ${{ env.RESOURCE_GROUP }}
-          --yes || echo "Firewall rule removal failed or rule doesn't exist"
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1

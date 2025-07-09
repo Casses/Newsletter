@@ -14,7 +14,7 @@ env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '.' # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '8.0.x' # set this to the dotnet version to use
   FIREWALL_RULE_NAME: 'github-actions-runner'
-  SQL_SERVER_NAME: 'notify-db.database.windows.net' # Replace with your actual SQL server name
+  SQL_SERVER_NAME: 'notify-db' # Replace with your actual SQL server name
   RESOURCE_GROUP: 'Notify.RG'
 
 jobs:
